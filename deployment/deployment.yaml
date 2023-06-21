@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-process-manager
+  labels:
+    app: order-process-manager
+  namespace: microservices-workshop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-process-manager
+  template:
+    metadata:
+      labels:
+        app: order-process-manager
+      annotations:
+        linkerd.io/inject: enabled
+    spec:
+      serviceAccountName: order-process-manager
+      containers:
+        - name: order-process-manager
+          imagePullPolicy: Always
+          image: localhost:5000/order-process-manager:{{version}}
+          ports:
+            - containerPort: 8080
+            - containerPort: 8081
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: prod
+            - name: SENTRY_DSN
+              value: https://07a59f9fafa845b8ada43a31867219cb@o4505347633774592.ingest.sentry.io/4505391173206016
+            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+              value: kafka-broker:29092
+          livenessProbe:
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 6
+            httpGet:
+              port: 8081
+              path: /actuator/health
+          readinessProbe:
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            failureThreshold: 8
+            httpGet:
+              port: 8081
+              path: /actuator/health
