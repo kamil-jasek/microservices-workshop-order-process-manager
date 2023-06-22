@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>com.mycompany</groupId>
 	<artifactId>order-process-manager</artifactId>
-	<version>0.0.6-SNAPSHOT</version>
+	<version>0.0.8-SNAPSHOT</version>
 	<name>order-process-manager</name>
 	<description>Demo project for Microservice workshop</description>
 
@@ -22,6 +22,10 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
 		</dependency>
 
 		<dependency>

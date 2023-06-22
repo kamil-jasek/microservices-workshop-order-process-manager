@@ -16,6 +16,8 @@ spec:
         app: order-process-manager
       annotations:
         linkerd.io/inject: enabled
+        prometheus.io/should_be_scraped: "true"
+        prometheus.io/scrape_port: "8081"
     spec:
       serviceAccountName: order-process-manager
       containers:
