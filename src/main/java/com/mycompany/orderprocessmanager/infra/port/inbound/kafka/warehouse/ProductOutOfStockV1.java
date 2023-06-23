@@ -7,9 +7,7 @@ import lombok.NonNull;
 import java.time.Instant;
 import java.util.UUID;
 
-import static com.mycompany.orderprocessmanager.infra.port.inbound.kafka.warehouse.ProductOutOfStockV1.*;
-import static java.time.Instant.now;
-import static java.util.UUID.randomUUID;
+import static com.mycompany.orderprocessmanager.infra.port.inbound.kafka.warehouse.ProductOutOfStockV1.ProductOutOfStockData;
 
 @JsonSubtype
 final class ProductOutOfStockV1 extends DomainEvent<ProductOutOfStockData> {
@@ -21,14 +19,6 @@ final class ProductOutOfStockV1 extends DomainEvent<ProductOutOfStockData> {
         super(eventId, eventTime, correlationId, data);
     }
 
-    static ProductOutOfStockV1 of(ProductOutOfStockData data) {
-        return new ProductOutOfStockV1(
-            randomUUID(),
-            now(),
-            null,
-            data);
-    }
-
-    record ProductOutOfStockData(UUID orderId, UUID productId) implements DomainEventData {
+    record ProductOutOfStockData(UUID waybillId, UUID productId) implements DomainEventData {
     }
 }

@@ -15,7 +15,6 @@ public interface WarehouseRestApi {
     void createStockReleaseOrder(@RequestBody StockReleaseOrder stockReleaseOrder);
 
     record StockReleaseOrder(@NonNull UUID waybillId,
-                             @NonNull UUID orderId,
                              @NonNull DeliveryAddress deliveryAddress,
                              @NonNull List<StockReleaseOrderItem> items) {
     }

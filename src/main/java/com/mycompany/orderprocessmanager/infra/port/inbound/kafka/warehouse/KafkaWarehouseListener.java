@@ -1,6 +1,8 @@
 package com.mycompany.orderprocessmanager.infra.port.inbound.kafka.warehouse;
 
 import com.mycompany.orderprocessmanager.infra.port.outbound.http.orders.OrdersRestApi;
+import com.mycompany.orderprocessmanager.infra.port.outbound.http.orders.OrdersRestApi.OrderCancelReason;
+import com.mycompany.orderprocessmanager.infra.port.outbound.http.orders.OrdersRestApi.OrderShipmentId;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -18,7 +20,8 @@ final class KafkaWarehouseListener {
         containerFactory = "domainEventKafkaContainerFactory"
     )
     void handleStockReleased(StockReleasedV1 event) {
-        ordersRestApi.sendOrder(event.getData().orderId());
+        ordersRestApi.sendOrder(event.getData().waybillId(),
+            new OrderShipmentId(event.getData().shipmentId()));
     }
 
     @SneakyThrows
@@ -29,7 +32,7 @@ final class KafkaWarehouseListener {
     )
     void handleProductOutOfStock(ProductOutOfStockV1 event) {
         ordersRestApi.cancelOrder(
-            event.getData().orderId(),
-            new OrdersRestApi.OrderCancelReason("product out of stock: " + event.getData().productId()));
+            event.getData().waybillId(),
+            new OrderCancelReason("product out of stock: " + event.getData().productId()));
     }
 }

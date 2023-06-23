@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static java.util.UUID.randomUUID;
 import static java.util.stream.Collectors.toList;
 
 @Slf4j
@@ -38,7 +37,6 @@ class KafkaOrdersListener {
     private StockReleaseOrder createStockReleaseOrder(OrderDataV1 order) {
         final var deliveryAddress = customerRestApi.findById(order.customerId()).deliveryAddress();
         return new StockReleaseOrder(
-            randomUUID(),
             order.id(),
             new WarehouseRestApi.DeliveryAddress(deliveryAddress.name(), deliveryAddress.address()),
             order.orderItems()

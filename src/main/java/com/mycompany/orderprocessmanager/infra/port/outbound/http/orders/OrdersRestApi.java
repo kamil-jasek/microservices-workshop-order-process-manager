@@ -11,7 +11,10 @@ import java.util.UUID;
 public interface OrdersRestApi {
 
     @PutMapping("/v1/orders/{id}/send")
-    void sendOrder(@PathVariable UUID id);
+    void sendOrder(@PathVariable UUID id, @RequestBody OrderShipmentId shipmentId);
+
+    record OrderShipmentId(UUID shipmentId) {
+    }
 
     @PutMapping("/v1/orders/{id}/cancel")
     void cancelOrder(@PathVariable UUID id, @RequestBody OrderCancelReason reason);
