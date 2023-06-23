@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>com.mycompany</groupId>
 	<artifactId>order-process-manager</artifactId>
-	<version>0.0.8-SNAPSHOT</version>
+	<version>0.0.9-SNAPSHOT</version>
 	<name>order-process-manager</name>
 	<description>Demo project for Microservice workshop</description>
 
